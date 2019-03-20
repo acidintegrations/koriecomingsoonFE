@@ -12,27 +12,30 @@
                 <div>
                     <div id="mailing-list">Sign Up to our Mailing List!</div>
                 </div>
-                <div id="form-container">
-                    <div>
-                        <KInput
-                            v-model="inputData.email"
-                            color="pink"
-                            placeholder="Enter Email"
-                        />
-                    </div>
-                    <div>
-                        <KButton
-                            @click="sendMail"
-                            label="Notify Me"
-                            color="pink"
-                            radius="1.5"
-                            uppercase
-                            fontSize="1"
-                            paddingVertical="0.5"
-                            paddingHorizontal="3"
-                        />
-                    </div>
-                </div>
+                    <form @submit="sendMail($event)">
+                        <div id="form-container">
+                            <div>
+                                <KInput
+                                    v-model="inputData.email"
+                                    color="pink"
+                                    placeholder="Enter Email"
+                                    type="email"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <KButton
+                                    label="Notify Me"
+                                    color="pink"
+                                    radius="1.5"
+                                    uppercase
+                                    fontSize="1"
+                                    paddingVertical="0.5"
+                                    paddingHorizontal="3"
+                                />
+                            </div>
+                        </div>
+                </form>
             </div>
         </div>
     </div>
@@ -61,20 +64,20 @@ export default {
         document.getElementById("car").animate(this.carAnimation, this.carTiming);
     },
     methods: {
-        sendMail() {
-            if (this.inputData.email !== "") {
-                const data = {
-                    email: this.inputData.email
-                };
+        sendMail(event) {
+            event.preventDefault();
 
-                mailingListService.sendMail(data)
-                    .then(() => {
-                        console.log("hi")
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                    });
-            }
+            // const data = {
+            //     email: this.inputData.email
+            // };
+
+            // mailingListService.sendMail(data)
+            //     .then(() => {
+                    
+            //     })
+            //     .catch((error) => {
+            //         console.log(error.message);
+            //     });
         }
     },
     components: {

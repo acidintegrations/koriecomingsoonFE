@@ -5,6 +5,7 @@
         :value="value"
         :type="type"
         :placeholder="placeholder"
+        :required="required"
     />
 </template>
 
@@ -14,7 +15,8 @@ export default {
         value: [String, Number],
         type: String,
         placeholder: String,
-        color: String
+        color: String,
+        required: Boolean
     },
     computed: {
         inputClasses() {
