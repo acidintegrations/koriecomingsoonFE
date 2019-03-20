@@ -2,8 +2,8 @@
     <div id="wrapper">
         <div id="wrapper-flex-container">
             <div id="logo-container">
-                <img src="/images/branding/korie-logo-white.svg" width="100%"/>
-                <img ref="car" id="car" src="/images/branding/car.png" width="60" />
+                <img id="logo" src="/images/branding/korie-logo-white.svg" />
+                <img id="car" src="/images/branding/car.png" width="60" />
             </div>
             <div>
                 <div id="coming-soon">COMING SOON</div>
@@ -22,6 +22,7 @@
                     </div>
                     <div>
                         <KButton
+                            @click="sendMail"
                             label="Notify Me"
                             color="pink"
                             radius="1.5"
@@ -41,6 +42,7 @@
 import KInput from "@/components/KInput";
 import KButton from "@/components/KButton";
 import carAnimation from "@/assets/car-animation";
+import mailingListService from "@/services/mailing-list-service";
 
 export default {
     data() {
@@ -52,8 +54,28 @@ export default {
             }
         };
     },
+    created() {
+        
+    },
     mounted() {
         document.getElementById("car").animate(this.carAnimation, this.carTiming);
+    },
+    methods: {
+        sendMail() {
+            if (this.inputData.email !== "") {
+                const data = {
+                    email: this.inputData.email
+                };
+
+                mailingListService.sendMail(data)
+                    .then(() => {
+                        console.log("hi")
+                    })
+                    .catch((error) => {
+                        console.log(error.message);
+                    });
+            }
+        }
     },
     components: {
         KInput,
@@ -64,6 +86,7 @@ export default {
 
 <style scoped>
 #wrapper {
+    min-width: 800px;
     min-height: 100vh;
     background-color: #D42191;
     overflow: auto;
@@ -78,11 +101,13 @@ export default {
 }
 
 #logo-container {
-    padding: 45px;
+    padding: 75px;
     border: solid 2.5px white;
-    width: 200px;
-    height: 200px;
     position: relative;
+}
+
+#logo {
+    transform: scale(1.75);
 }
 
 #car {
